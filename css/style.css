@@ -90,7 +90,8 @@ a {text-decoration:none;}
   background-color: rgba(0, 0, 0, 0.3);
 }
 .background:first-child {
-  background-image: url(../img/bg1.jpg);
+  /*background-image: url(../img/bg1.jpg);*/
+  background-color: #000;
   -webkit-transform: translateY(-15vh);
           transform: translateY(-15vh);
 }
@@ -219,7 +220,7 @@ a {text-decoration:none;}
 .fixedcallicon:hover {width:220px;background:rgba(245, 228, 25, 0.5);}
 
 
-.intro h1 {font-family:Great Vibes;font-size:150px;font-weight:400;line-height:1.1;}
+.intro h1 {font-family:main_font;font-size:150px;font-weight:400;line-height:1.1;}
 .intro h1 span.big {
 border-top: 1px solid;
     border-bottom: 1px solid;
@@ -1190,4 +1191,10 @@ p.comment-form-email, p.comment-form-author, p.comment-form-url {
 			 margin:0px auto;
 			 padding: 30px 30px;
 	}
+}
+
+@font-face {
+  font-family: main_font;
+  src: url(fonts/Champagne_and_Limousines_Bold.ttf);
+  
 }
