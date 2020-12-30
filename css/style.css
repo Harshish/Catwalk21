@@ -67,7 +67,7 @@ a {text-decoration:none;}
   background-repeat: no-repeat;
   background-position: center center;
   overflow: hidden;
-  will-change: transform;
+  will-change: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   height: 130vh;
@@ -150,7 +150,7 @@ a {text-decoration:none;}
 	color: #fff;
 	-webkit-transform: translateY(40vh);
 	transform: translateY(40vh);
-	will-change: transform;
+	will-change: auto;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 	-webkit-transition: all 1.7s cubic-bezier(0.22, 0.44, 0, 1);
@@ -1195,6 +1195,6 @@ p.comment-form-email, p.comment-form-author, p.comment-form-url {
 
 @font-face {
   font-family: main_font;
-  src: url(fonts/Champagne_and_Limousines_Bold.ttf);
+  src: url(../fonts/Champagne_and_Limousines_Bold.ttf);
   
 }

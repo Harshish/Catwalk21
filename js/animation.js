@@ -124,12 +124,12 @@ var centerX = window.innerWidth / 2;
 var centerY = window.innerHeight / 2;
 
 function autoClick() {
-  if (window.human) return;
+  //if (window.human) return;
   animateParticules(
-    anime.random(centerX-50, centerX+50), 
-    anime.random(centerY-50, centerY+50)
+    anime.random(0, 2*centerX), 
+    anime.random(0, 2*centerY)
   );
-  anime({duration: 200}).finished.then(autoClick);
+  anime({duration: 700}).finished.then(autoClick);
 }
 
 autoClick();
