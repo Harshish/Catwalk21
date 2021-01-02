@@ -129,7 +129,7 @@ function autoClick() {
     anime.random(0, 2*centerX), 
     anime.random(0, 2*centerY)
   );
-  anime({duration: 700}).finished.then(autoClick);
+  anime({duration: 300}).finished.then(autoClick);
 }
 
 autoClick();
