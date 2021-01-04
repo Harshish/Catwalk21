@@ -90,15 +90,15 @@ h6 {
 }
 
 .masthead {
-  min-height: 40rem;
+  /*min-height: 40rem;*/
   position: relative;
   display: table;
   width: 100%;
   height: auto;
   padding-top: 8rem;
   padding-bottom: 8rem;
-  background-color: rgba(0, 0, 0, 1);
-  /*background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../img/bg7.jpg");
+  background-color: rgba(255,255, 255, 1);
+  /*background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../img/bg2.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;*/
@@ -128,7 +128,7 @@ h6 {
   height: 100%;
   transition: all 0.4s ease 0s;
   transform: translateX(250px);
-  background: #1D809F;
+  background: #000000;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -390,16 +390,8 @@ canvas{
 
 #about {
   padding: 15rem 0;
-  background: linear-gradient(to left, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../img/bg7.jpg");
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../img/bg2.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 0;
-  border-top: 0.3rem solid rgba(255, 255, 255, 1);
-  width: 70%;
 }

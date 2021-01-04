@@ -6,13 +6,18 @@ var numberOfParticules = 7;
 var pointerX = 0;
 var pointerY = 0;
 var tap = ('ontouchstart' in window || navigator.msMaxTouchPoints) ? 'touchstart' : 'mousedown';
-var colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'];
+//var colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'];
+var colors = ['#ff0000', '#ffa500', '#ffff00', '#008000', '#0000ff','#4b0082','#ee82ee'];
+var canvasWidth = $("header").innerWidth();
+var canvasHeight = $("header").innerHeight();
 
 function setCanvasSize() {
-  canvasEl.width = window.innerWidth * 2;
-  canvasEl.height = window.innerHeight * 2;
-  canvasEl.style.width = window.innerWidth + 'px';
-  canvasEl.style.height = window.innerHeight + 'px';
+  canvasEl.width = $("header").innerWidth() * 2;
+  canvasWidth = canvasEl.width / 2;
+  canvasEl.height = $("header").innerHeight() * 2;
+  canvasHeight = canvasEl.height /  2;
+  canvasEl.style.width = $("header").innerWidth() + 'px';
+  canvasEl.style.height = $("header").innerHeight() + 'px';
   canvasEl.getContext('2d').scale(2, 2);
 }
 
@@ -120,14 +125,11 @@ document.addEventListener(tap, function(e) {
   animateParticules(pointerX, pointerY);
 }, false);
 
-var centerX = window.innerWidth / 2;
-var centerY = window.innerHeight / 2;
-
 function autoClick() {
   //if (window.human) return;
   animateParticules(
-    anime.random(0, 2*centerX), 
-    anime.random(0, 2*centerY)
+    anime.random(0, canvasWidth),
+    anime.random(0, canvasHeight)
   );
   anime({duration: 300}).finished.then(autoClick);
 }
