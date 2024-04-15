@@ -1,236 +1,359 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-<head>
+    <title>Catwalk 21 Salon &amp; Spa</title>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <!-- Icon link -->
+    <link
+      rel="icon"
+      href="img/catwalk21_cat_logo_black.svg"
+      type="image/x-icon"
+    />
 
-  <title>Catwalk 21 Salon &amp; Spa</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Icon link -->
-  <link rel = "icon" href = "img/catwalk21_cat_logo_black.svg" type = "image/x-icon"> 
+    <!-- Custom Fonts -->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="vendor/simple-line-icons/css/simple-line-icons.css"
+      rel="stylesheet"
+    />
 
-  <!-- Bootstrap Core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet" />
+    <link href="css/loader.css" rel="stylesheet" />
 
-  <!-- Custom Fonts -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Facebook Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "1033978853773098");
+      fbq("track", "PageView");
+    </script>
 
-  <!-- Custom CSS -->
-  <link href="css/stylish-portfolio.css" rel="stylesheet">
-  <link href="css/loader.css" rel="stylesheet">
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1033978853773098&ev=PageView&noscript=1"
+      />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+  </head>
 
-  <!-- Facebook Pixel Code -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1033978853773098');
-    fbq('track', 'PageView');
-  </script>
-
-  <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1033978853773098&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Facebook Pixel Code -->
-</head>
-
-<body id="page-top">
-
-  <div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-  </div>
-
-  <!-- Navigation -->
-  <a class="menu-toggle rounded" href="#">
-    <i class="fas fa-bars"></i>
-  </a>
-  <nav id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger btn btn-outline-dark" href="#page-top">
-          <i class="fa fa-home" aria-hidden="true"></i>
-          Home
-        </a>
-      </li>
-      <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger btn btn-outline-dark" href="#about">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
-          About
-        </a>
-      </li>
-      <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger btn btn-outline-dark" href="#services">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          Services
-        </a>
-      </li>
-      <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger btn btn-outline-dark" href="#contact">
-          <i class="fa fa-phone" aria-hidden="true"></i>
-          Contact
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Header -->
-  <header class="masthead d-flex">
-    <canvas  class="fireworks"></canvas>
-    <div class="container text-center my-auto" style="z-index: 1;">
-      <picture>
-        <img src="img/full_logo.png" class="img-fluid" width="50%" alt="Catwalk21 main Logo">
-      </picture>
-      <p class="h3" style="font-family: main_font;">SALON & SPA</p>
+  <body id="page-top">
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
     </div>
-    <div class="overlay"></div>
-  </header>
 
-  <!-- About -->
-  <section class="content-section bg-light" id="about">
-    <div class="container">
-      <div class="row">
-        <div class="col"></div>
-        <div class="col-lg-5 float-right mx-auto text-right" style="color: white;">
-          <h2><em>Catwalk 21 Salon & Spa</em> is the perfect pit stop for you!</h2>
-          <p class="lead mb-5">We at <b><em>Catwalk 21</em></b> aim at becoming the quintessential beauty destination giving
-          premium services of hair care, salon and spa. We boast of modern equipments and facilities along with highly trained
-          employees to give our customers an incredible salon expirience!</p>
-          <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section class="content-section" id="services">
-    <div class="container">
-      <div class="content-section-heading text-center">
-        <h2 class="text-secondary mb-5 mt-0">Services</h2>
-      </div>
-      <div class="row no-gutters">
-        <div class="col-lg-6">
-          <a class="portfolio-item" href="#!">
-            <div class="caption">
-              <div class="caption-content">
-                <div class="h2">Salon</div>
-                <p class="mb-0">Let us make your hair smooth, silky, radiant and supple!</p>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/bg3.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-lg-6">
-          <a class="portfolio-item" href="#!">
-            <div class="caption">
-              <div class="caption-content">
-                <div class="h2">Spa</div>
-                <p class="mb-0">Massages, Oils, Music, Candles and Aroma!</p>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/bg8.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-lg-6">
-          <a class="portfolio-item" href="#!">
-            <div class="caption">
-              <div class="caption-content">
-                <div class="h2">Skin care</div>
-                <p class="mb-0">Make your skin vibrant, gleaming and rubicund!</p>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/bg11.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-lg-6">
-          <a class="portfolio-item" href="#!">
-            <div class="caption">
-              <div class="caption-content">
-                <div class="h2">Bridal</div>
-                <p class="mb-0">Give yourself the most desirable bridal makeover to look perfect on your wedding day!</p>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/bg12.jpg" alt="">
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <div id="contact" class="map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15070.304097726346!2d72.8631328!3d19.2137118!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x189989d18f1804b9!2sCatwalk%2021%20Salon%20%26%20Spa!5e0!3m2!1sen!2sin!4v1609566864934!5m2!1sen!2sin"></iframe>
-  </div>
-  <div class="container">
-    <div class="content-section-heading text-center">
-      <h2 class="mb-5 mt-5">Contact Information</h2>
-    </div>
-    <div class="row">
-      <div class="col text-center">
-        <p class="mb-0 h3">Shop 37, Vasant Smruti CHS Ltd.,</p>
-        <p class="mb-0 h3">Near Surbhi Hotel, 90ft Road,</p>
-        <p class="mb-0 h3">Thakur Complex, Kandivali(E),</p>
-        <p class="h3">Mumbai - 400 101</p>
-        <p class="mb-0 h5"><i class="fas fa-phone"></i> 022 4971 2225/8452032889</p>
-        <p class="mb-0 h5"><i class="fa fa-envelope"></i> customercare@catwalk21salon.com</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer text-center">
-    <div class="container">
-      <ul class="list-inline mb-5">
-        <li class="list-inline-item">
-          <a class="social-link rounded-circle text-white mr-3" href="https://www.facebook.com/salon.spa.mumbai/">
-            <i class="icon-social-facebook"></i>
+    <!-- Navigation -->
+    <a class="menu-toggle rounded" href="#">
+      <i class="fas fa-bars"></i>
+    </a>
+    <nav id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger btn btn-outline-dark" href="#page-top">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            Home
           </a>
         </li>
-        <li class="list-inline-item">
-          <a class="social-link rounded-circle text-white mr-3" href="#!">
-            <i class="icon-social-twitter"></i>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger btn btn-outline-dark" href="#about">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+            About
           </a>
         </li>
-        <li class="list-inline-item">
-          <a class="social-link rounded-circle text-white" href="#!">
-            <i class="icon-social-instagram"></i>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger btn btn-outline-dark" href="#services">
+            <i class="fa fa-book" aria-hidden="true"></i>
+            Services
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger btn btn-outline-dark" href="#contact">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            Contact
           </a>
         </li>
       </ul>
-      <p class="text-muted small mb-0">Copyright &copy; Catwalk21 2021</p>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead d-flex">
+      <canvas class="fireworks"></canvas>
+      <div class="container text-center my-auto" style="z-index: 1">
+        <picture>
+          <img
+            src="img/full_logo.png"
+            class="img-fluid"
+            width="50%"
+            alt="Catwalk21 main Logo"
+          />
+        </picture>
+        <p class="h3" style="font-family: main_font">SALON & SPA</p>
+      </div>
+      <div class="overlay"></div>
+    </header>
+
+    <!-- About -->
+    <section class="content-section bg-light" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div
+            class="col-lg-5 float-right mx-auto text-right"
+            style="color: white"
+          >
+            <h2>
+              <em>Catwalk 21 Salon & Spa</em> is the perfect pit stop for you!
+            </h2>
+            <p class="lead mb-5">
+              We at <b><em>Catwalk 21</em></b> aim at becoming the
+              quintessential beauty destination giving premium services of hair
+              care, salon and spa. We boast of modern equipments and facilities
+              along with highly trained employees to give our customers an
+              incredible salon expirience!
+            </p>
+            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services"
+              >What We Offer</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="content-section" id="services">
+      <div class="container">
+        <div class="content-section-heading text-center">
+          <h2 class="text-secondary mb-5 mt-0">Services</h2>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="#!">
+              <div class="caption">
+                <div class="caption-content">
+                  <div class="h2">Salon</div>
+                  <p class="mb-0">
+                    Let us make your hair smooth, silky, radiant and supple!
+                  </p>
+                </div>
+              </div>
+              <img class="img-fluid" src="img/bg3.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="#!">
+              <div class="caption">
+                <div class="caption-content">
+                  <div class="h2">Spa</div>
+                  <p class="mb-0">Massages, Oils, Music, Candles and Aroma!</p>
+                </div>
+              </div>
+              <img class="img-fluid" src="img/bg8.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="#!">
+              <div class="caption">
+                <div class="caption-content">
+                  <div class="h2">Skin care</div>
+                  <p class="mb-0">
+                    Make your skin vibrant, gleaming and rubicund!
+                  </p>
+                </div>
+              </div>
+              <img class="img-fluid" src="img/bg11.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="#!">
+              <div class="caption">
+                <div class="caption-content">
+                  <div class="h2">Bridal</div>
+                  <p class="mb-0">
+                    Give yourself the most desirable bridal makeover to look
+                    perfect on your wedding day!
+                  </p>
+                </div>
+              </div>
+              <img class="img-fluid" src="img/bg12.jpg" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <div class="content-section-heading text-center">
+      <h2 class="mb-5">Our Branches</h2>
     </div>
-  </footer>
+    <div
+      id="carouselExampleIndicators"
+      class="carousel slide"
+      data-ride="carousel"
+    >
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="2000">
+          <div id="contact" class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15070.304097726346!2d72.8631328!3d19.2137118!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x189989d18f1804b9!2sCatwalk%2021%20Salon%20%26%20Spa!5e0!3m2!1sen!2sin!4v1609566864934!5m2!1sen!2sin"
+            ></iframe>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+            <div class="carousel-caption d-none d-md-block">
+              <h3>
+                <span class="badge badge-secondary">Thakur Complex Branch</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-interval="2000">
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d418.4025972388456!2d72.8734385273876!3d19.214094205893073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7a76a6c0c4b%3A0x79f7901c7156e3f7!2sCatwalk%2021%20salon%20professional%20Thakur%20Village!5e0!3m2!1sen!2snl!4v1713209486712!5m2!1sen!2snl"
+              width="600"
+              height="450"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <div class="carousel-caption d-none d-md-block">
+              <h3>
+                <span class="badge badge-secondary">Thakur Village Branch</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-target="#carouselExampleIndicators"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </button>
+    </div>
 
-  <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <div class="container">
+      <div class="content-section-heading text-center">
+        <h2 class="mb-5 mt-5">Contact Information</h2>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <p class="mb-0 h3">Shop 37, Vasant Smruti CHS Ltd.,</p>
+          <p class="mb-0 h3">Near Surbhi Hotel, 90ft Road,</p>
+          <p class="mb-0 h3">Thakur Complex, Kandivali(E),</p>
+          <p class="h3">Mumbai - 400 101</p>
+        </div>
+        <div class="col text-center">
+          <p class="mb-0 h3">Shop 58, Evershine Moon CHS 72,</p>
+          <p class="mb-0 h3">
+            behind Evershine Crown, Evershine Millennium Paradise,
+          </p>
+          <p class="mb-0 h3">Thakur Village, Kandivali East,</p>
+          <p class="h3">Mumbai - 400 101</p>
+        </div>
+      </div>
+      <div class="content-section-heading text-center mt-5">
+        <p class="mb-0 h5">
+          <i class="fas fa-phone"></i> 022 4971 2225/8452032889
+        </p>
+        <p class="mb-0 h5">
+          <i class="fa fa-envelope"></i> customercare@catwalk21salon.com
+        </p>
+      </div>
+    </div>
 
-  <!-- Custom scripts for this template -->
-  <script src="js/stylish-portfolio.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/anime.min.js"></script>
-  <script src="js/animation.js"></script>
+    <!-- Footer -->
+    <footer class="footer text-center">
+      <div class="container">
+        <ul class="list-inline mb-5">
+          <li class="list-inline-item">
+            <a
+              class="social-link rounded-circle text-white mr-3"
+              href="https://www.facebook.com/salon.spa.mumbai/"
+            >
+              <i class="icon-social-facebook"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="social-link rounded-circle text-white mr-3" href="#!">
+              <i class="icon-social-twitter"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="social-link rounded-circle text-white" href="#!">
+              <i class="icon-social-instagram"></i>
+            </a>
+          </li>
+        </ul>
+        <p class="text-muted small mb-0">Copyright &copy; Catwalk21 2021</p>
+      </div>
+    </footer>
 
-</body>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/stylish-portfolio.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script src="js/animation.js"></script>
+  </body>
 </html>
