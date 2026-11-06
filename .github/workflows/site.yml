@@ -4,11 +4,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      publish:
-        description: 'Enter PUBLISH to replace the site on master after reviewing the preview'
-        required: true
-        type: string
 
 concurrency:
   group: catwalk21-site
@@ -40,7 +35,7 @@ jobs:
           if-no-files-found: error
 
   publish:
-    if: github.event_name == 'workflow_dispatch' && inputs.publish == 'PUBLISH'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment: production
