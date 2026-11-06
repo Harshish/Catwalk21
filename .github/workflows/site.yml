@@ -1,0 +1,61 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Enter PUBLISH to replace the site on master after reviewing the preview'
+        required: true
+        type: string
+
+concurrency:
+  group: catwalk21-site
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: build/
+          if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish == 'PUBLISH'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          path: deploy
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-preview
+          path: site
+      - run: |
+          rsync -a --delete --exclude=.git/ site/ deploy/
+          cd deploy
+          git add -A
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Deploy static site'
+          git push origin HEAD:master

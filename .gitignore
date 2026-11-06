@@ -1,1 +1,9 @@
 .git/
+.DS_Store
+node_modules/
+.svelte-kit/
+build/
+graphify-out/
+.env
+.env.*
+!.env.example
