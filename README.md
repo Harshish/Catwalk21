@@ -4,17 +4,17 @@ Prerendered SvelteKit marketing site for Hostinger Single Web Hosting. The exist
 
 ## Local preview
 
-Requires Node.js 22.12 or later and npm.
+Requires Node.js 22.12 or later and pnpm 11.26.0.
 
 ```sh
-npm ci
-npm run check
-npm run build
-npm test
-npm run preview
+pnpm install --frozen-lockfile
+pnpm check
+pnpm build
+pnpm test
+pnpm preview
 ```
 
-Open the URL printed by `npm run preview`. `npm run dev` starts the development server. The build output is in `build/`; it is intentionally ignored on `main`. The output contains static HTML and assets, not a PHP or Node server.
+Open the URL printed by `pnpm preview`. `pnpm dev` starts the development server. The build output is in `build/`; it is intentionally ignored on `main`. The output contains static HTML and assets, not a PHP or Node server.
 
 ## Launch checklist
 
