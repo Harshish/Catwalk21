@@ -46,6 +46,17 @@ test('original copy and a pausable decorative service marquee are published', ()
   assert.doesNotMatch(html, /service-navigation|Good hair\./);
 });
 
+test('mandala ornaments are rendered locally and excluded from assistive navigation', () => {
+  const ornaments = [...html.matchAll(/<svg class="mandala [^"]*"[^>]*>[\s\S]*?<\/svg>/g)].map(([markup]) => markup);
+  assert.equal(ornaments.length, 3);
+  for (const ornament of ornaments) {
+    assert.match(ornament, /aria-hidden="true"/);
+    assert.match(ornament, /focusable="false"/);
+    assert.match(ornament, /<path/);
+    assert.doesNotMatch(ornament, /<a\b|tabindex/);
+  }
+});
+
 test('contact actions use local SVG icons with visible text labels', () => {
   for (const label of ['Email us', 'Instagram', 'Facebook', 'Back to top', 'Call 8452032889', 'Get directions']) {
     const link = [...html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].find(([markup]) => markup.includes(label));

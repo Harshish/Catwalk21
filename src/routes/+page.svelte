@@ -195,6 +195,20 @@
   <span class="wordmark">Catwalk <span>21</span><small>Salon & Spa</small></span>
 {/snippet}
 
+<!-- Decorative mandala: petal rings drawn by rotating one path, so it stays crisp and tiny. -->
+{#snippet mandala(/** @type {string} */ variant)}
+  <svg class={`mandala ${variant}`} viewBox="-100 -100 200 200" fill="none" stroke="currentColor" stroke-width=".5" aria-hidden="true" focusable="false">
+    <circle r="97" /><circle r="93" stroke-dasharray="1 3" />
+    {#each Array(32) as _, i}<path transform={`rotate(${i * 11.25})`} d="M-9 -91Q0 -101 9 -91" />{/each}
+    {#each Array(16) as _, i}<g transform={`rotate(${i * 22.5})`}><path d="M0 -88C11 -76 11 -62 0 -52C-11 -62 -11 -76 0 -88Z" /><path d="M0 -80C5 -72 5 -64 0 -58C-5 -64 -5 -72 0 -80Z" /><circle cy="-46" r="1.2" fill="currentColor" /></g>{/each}
+    <circle r="42" /><circle r="38" stroke-dasharray="2 2" />
+    {#each Array(12) as _, i}<path transform={`rotate(${i * 30 + 15})`} d="M0 -38C10 -31 10 -24 0 -18C-10 -24 -10 -31 0 -38Z" />{/each}
+    <circle r="16" />
+    {#each Array(8) as _, i}<path transform={`rotate(${i * 45})`} d="M0 -14C4 -10 4 -6 0 -3C-4 -6 -4 -10 0 -14Z" />{/each}
+    <circle r="2" fill="currentColor" />
+  </svg>
+{/snippet}
+
 <a class="skip-link" href="#main-content">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 <header class="site-header" class:scrolled>
@@ -232,6 +246,7 @@
         <a class="review-shortcut entrance" style="--delay: 550ms" href="#reviews"><span class="google-label"><GoogleLogoIcon size={18} aria-hidden="true" />Google reviews</span><span>Get to know us through our guests</span></a>
       </div>
       <div class="hero-visual">
+        {@render mandala('mandala-hero')}
         <div class="arch-outline" aria-hidden="true"></div>
         <div class="hero-arch"><img src="/img/hero-bride.jpg" alt="Bride in a red dupatta with kundan jewellery and mehendi" width="1200" height="1800" fetchpriority="high" data-parallax="28" /></div>
         <span class="hero-badge entrance" style="--delay: 900ms"><SparkleIcon size={18} weight="fill" aria-hidden="true" />Hair · Skin · Spa · Bridal</span>
@@ -323,6 +338,7 @@
   </section>
 
   <section id="reviews" class="reviews section" aria-labelledby="reviews-title">
+    {@render mandala('mandala-reviews')}
     <div class="review-feature wrap" data-reveal>
       <div class="review-symbol"><QuotesIcon size={64} weight="fill" aria-hidden="true" /></div>
       <p class="eyebrow">The word around the neighbourhood</p>
@@ -353,6 +369,7 @@
 
 <footer class="site-footer">
   <div class="jaali" aria-hidden="true"></div>
+  {@render mandala('mandala-footer')}
   <div class="wrap">
     <p class="footer-wordmark" aria-hidden="true">Catwalk <em>21</em></p>
     <div class="footer-inner">
@@ -432,6 +449,13 @@
 
   .jaali { position: absolute; inset: 0; pointer-events: none; opacity: .07; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='%23d4b37a' stroke-width='.8'%3E%3Ccircle cx='28' cy='28' r='19.8'/%3E%3Ccircle cx='0' cy='0' r='19.8'/%3E%3Ccircle cx='56' cy='0' r='19.8'/%3E%3Ccircle cx='0' cy='56' r='19.8'/%3E%3Ccircle cx='56' cy='56' r='19.8'/%3E%3C/g%3E%3C/svg%3E"); mask-image: radial-gradient(ellipse at 70% 40%, black, transparent 70%); }
   :global([data-theme='light']) .jaali { opacity: .16; }
+  .mandala { position: absolute; pointer-events: none; color: var(--gold-soft); }
+  .mandala-hero { z-index: -1; inset: 50% auto auto 50%; width: 150%; margin: -75% 0 0 -75%; opacity: .3; }
+  .mandala-reviews { top: 50%; left: 50%; width: min(720px, 120vw); margin: calc(min(720px, 120vw) / -2) 0 0 calc(min(720px, 120vw) / -2); opacity: .12; }
+  .mandala-footer { top: -12rem; right: -12rem; width: 34rem; opacity: .14; }
+  /* Mehendi-style scalloped lace hanging from the top edge of tinted sections. */
+  .services, .gallery, .visit-banner { position: relative; }
+  .services::before, .gallery::before, .visit-banner::before { content: ''; position: absolute; inset: 0 0 auto; height: 20px; pointer-events: none; opacity: .55; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Cg fill='none' stroke='%23c8a46a' stroke-width='.8'%3E%3Cpath d='M0 1Q20 22 40 1'/%3E%3Cpath d='M8 1Q20 13 32 1'/%3E%3C/g%3E%3Cg fill='%23c8a46a'%3E%3Ccircle cx='20' cy='16' r='1.4'/%3E%3Ccircle cx='0' cy='4' r='1'/%3E%3Ccircle cx='40' cy='4' r='1'/%3E%3C/g%3E%3C/svg%3E") repeat-x top / 40px 20px; }
 
   .hero { position: relative; overflow: hidden; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-block: 7rem 4rem; background: radial-gradient(ellipse 60% 50% at 75% 45%, var(--glow), transparent 70%), var(--bg); }
   .hero-inner { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(2rem, 6vw, 6rem); }
@@ -453,7 +477,7 @@
   .link:hover::after { transform: scaleX(.3); }
   .review-shortcut { display: inline-flex; flex-direction: column; gap: .35rem; margin-top: 2.6rem; padding-left: 1.1rem; border-left: 1px solid var(--border); color: var(--muted); font-size: .78rem; text-decoration: none; }
   .google-label { display: inline-flex; align-items: center; gap: .5rem; color: var(--ink); font-weight: 700; }
-  .hero-visual { position: relative; justify-self: center; width: min(100%, 470px); padding: 1.2rem; animation: entrance 1.4s .15s var(--ease) both; }
+  .hero-visual { position: relative; isolation: isolate; justify-self: center; width: min(100%, 470px); padding: 1.2rem; animation: entrance 1.4s .15s var(--ease) both; }
   .arch-outline { position: absolute; inset: 0; border: 1px solid var(--gold-soft); border-radius: 999px 999px 0 0; opacity: .55; }
   .hero-arch { overflow: hidden; border-radius: 999px 999px 0 0; aspect-ratio: 2 / 3; background: var(--surface); animation: unveil 1.6s .2s var(--ease) both; }
   .hero-arch img { width: 100%; height: 112%; margin-top: -6%; object-fit: cover; object-position: center 20%; }
@@ -526,8 +550,8 @@
   .step-index { display: block; margin-bottom: 1.2rem; font: 700 .68rem var(--sans); letter-spacing: .26em; color: var(--gold); }
   .ritual-steps p { color: var(--muted); margin: 1rem 0 0; max-width: 22rem; }
 
-  .reviews { position: relative; background: radial-gradient(ellipse at 50% 30%, var(--tint), transparent 70%); }
-  .review-feature { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .reviews { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, var(--tint), transparent 70%); }
+  .review-feature { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; }
   .review-feature .eyebrow { justify-content: center; }
   .review-symbol { color: var(--gold-soft); margin-bottom: 1.4rem; }
   .review-intro { max-width: 34rem; margin: 2rem 0 2.6rem; color: var(--muted); }
