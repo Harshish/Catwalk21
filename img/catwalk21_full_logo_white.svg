@@ -14,7 +14,7 @@
    id="svg863"
    inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
    sodipodi:docname="Catwalk1.svg">
-  <defs
+  <!-- Wordmark font subset embedded so the logo renders inside <img>. --><style>@font-face{font-family:'Champagne &amp; Limousines';font-weight:bold;src:url(data:font/woff2;base64,d09GMgABAAAAAAOMAAwAAAAABogAAAM/AAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAZBEQCoQUgygBNgIkAygTGAsWAAQgBYNgByAbNQUAHoVxwx1DmSxxfVNspT4e/rvX7vszqcU6UCwnQNFYBYlAwKIB2Qa8gHs8uhaiMfj3rHlpUyRr5OBuFwLOwBeE/OcGmP9r6kVplCZTAxZG4gEncK1ApiNJ0H/Pvw94QAOXOTcRyX0jKmmjdkj5CXUINFFtAW0KxCzfphcyKiURn2KFVPrTfED40OHq7wEOp7K29P8JXBZKiQMggPSklwLWgAokMMVDwPIFtUMKHtiaCVfJ8pSpLLBmfErk/qa8XXfcKguNGYkgWCKDooQUEqAN/XZCCzwA/wDIAEkMgUIgtCerycvL8GVkU4VhEZnVslAI9s9d0qx1J+IC0zP1Vtgmq7wbCVh72d7w2+HL0XQrSx61x1syfc95rS9k+8PD7jA9T9H0jO1VZsitvfKcNL+YhhM2ityJ8JFbyO1/QuTd2qhsJkODYsQsP7K2mqmt5bEUCyYzNENqq5iYKKaGjY9loxOfLXobbdOWODIN9G7GYtFibJiyMtOv01a3QDnG20DXTCMtWMnA+yATvlNLnCPxiOxaNPmPYVGyfUfYpPFdxpGJm1bW8xfD721fX/j50VSbbdsMJdt22kz9/Li+8PSWm88DAj5/DfB/fhO+v8ty9j68L5FcviqZc/9hzu7c3bt+jCileHqmpXd0nj47OnL6dGdHWpqnJ2b+jHyYFZt5ldw9dnb3t926E/uhtF0K+mM36A/I/Iyk7krdsGjD913fNyyCz2REuXSkccG2+dualUNHTu6xnL++Zt763ZYABKjBvp9vmyhv903EigD8/VuxBODluGjF/6L/7cJ7QikIMQIIaGz+n8A5Gd1g/t2/BQF+Yzs7QRJ/Id+xnz8fG+he+ORV8KleIjWGUVB5gcvLAASYIggBoI4uR0BbOaEENACAhAINMXhIFgNuQJOQyDApIiMmT5AFJp+F1ybNLDjoAiYRhvXg+ElWrkS6ApwwWQrlK1KqUAEJjgkjKKyhGjMiBXGWJw+nRLZMWcqURplujaaXFfQmjZSrLMnqssky0fRkeve32fIVKlcqm3d/pVwUypN2r+CitRHB0I9foHHMSQ9Qc5k6jo/yStfGzH/nglm3QPOiDRqeyarMMAE=) format('woff2')}</style><defs
      id="defs857">
     <rect
        id="rect843"
