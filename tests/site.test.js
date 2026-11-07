@@ -20,7 +20,7 @@ test('visitor can explore women-forward, unisex Services with the original logo 
   assert.match(html, /aria-label="Dark theme"/);
   assert.match(html, /href="#main-content"/);
   assert.doesNotMatch(html, /full_logo\.png/);
-  for (const image of ['catwalk21_cat_logo_black.svg', 'catwalk21_cat_logo_white.svg', 'bg3.jpg', 'bg8.jpg', 'bg11.jpg', 'bg12.jpg']) {
+  for (const image of ['catwalk21_cat_logo_black.svg', 'catwalk21_cat_logo_white.svg', 'hero-bride.jpg', 'bg3.jpg', 'bg8.jpg', 'bg10.jpg', 'bg11.jpg', 'bg12.jpg', 'bridal-portrait.jpg', 'mehendi.jpg', 'salon-interior.jpg']) {
     assert.ok(existsSync(new URL(`../build/img/${image}`, import.meta.url)), `${image} is published`);
   }
 });
@@ -47,7 +47,7 @@ test('original copy and a pausable decorative service marquee are published', ()
 });
 
 test('contact actions use local SVG icons with visible text labels', () => {
-  for (const label of ['Email us', 'Facebook', 'Back to top', 'Call 8452032889', 'Get directions']) {
+  for (const label of ['Email us', 'Instagram', 'Facebook', 'Back to top', 'Call 8452032889', 'Get directions']) {
     const link = [...html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].find(([markup]) => markup.includes(label));
     assert.ok(link, `${label} link exists`);
     assert.match(link[0], /<svg[^>]*aria-hidden="true"/);
@@ -64,6 +64,38 @@ test('reviews link to the original branch listings without fabricated ratings', 
   assert.doesNotMatch(html, /aggregateRating|ratingValue|<blockquote/);
   assert.match(html, /Read Google reviews for Thakur Complex \(opens in a new tab\)/);
   assert.match(html, /Read Google reviews for Thakur Village \(opens in a new tab\)/);
+});
+
+test('bridal, gallery and Instagram sections use local photos and link the real account', () => {
+  assert.match(html, /id="bridal"/);
+  assert.match(html, /id="gallery"/);
+  const tiles = [...html.matchAll(/<figure class="tile[^"]*"[^>]*><img[^>]+alt="[^"]+"/g)];
+  assert.equal(tiles.length, 6);
+  assert.ok(html.includes('href="https://www.instagram.com/catwalk21salon/"'));
+  assert.doesNotMatch(html, /instagram\.com\/embed|cdninstagram|images\.unsplash/);
+});
+
+test('mobile quick-call bar dials each Branch', () => {
+  const bar = html.match(/<nav class="call-bar[^"]*" aria-label="Quick call">([\s\S]*?)<\/nav>/)?.[1];
+  assert.ok(bar, 'quick-call bar exists');
+  assert.match(bar, /href="tel:\+918452032889"[^>]*aria-label="Call Thakur Complex"/);
+  assert.match(bar, /href="tel:\+919004960045"[^>]*aria-label="Call Thakur Village"/);
+});
+
+test('search engines get canonical metadata, local business data and crawl files', () => {
+  assert.match(html, /<html lang="en-IN"/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/catwalk21salon\.com\/"/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/catwalk21salon\.com\/img\/og-image\.jpg"/);
+  assert.ok(existsSync(new URL('../build/img/og-image.jpg', import.meta.url)));
+  const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(json, 'structured data exists');
+  const salons = JSON.parse(json)['@graph'].filter((node) => node['@type'] === 'BeautySalon');
+  assert.deepEqual(salons.map((salon) => salon.telephone), ['+918452032889', '+919004960045']);
+  for (const salon of salons) assert.equal(salon.address.postalCode, '400101');
+  const robots = readFileSync(new URL('../build/robots.txt', import.meta.url), 'utf8');
+  assert.match(robots, /Sitemap: https:\/\/catwalk21salon\.com\/sitemap\.xml/);
+  assert.match(readFileSync(new URL('../build/sitemap.xml', import.meta.url), 'utf8'), /<loc>https:\/\/catwalk21salon\.com\/<\/loc>/);
+  assert.match(readFileSync(new URL('../build/.htaccess', import.meta.url), 'utf8'), /RewriteRule \^blog\\\.html\$ \/ \[L,R=301\]/);
 });
 
 test('published site excludes template contact and tracking code', () => {

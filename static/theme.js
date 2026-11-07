@@ -5,7 +5,7 @@
   try { preference = localStorage.getItem('catwalk21-theme'); } catch {}
   const apply = (theme) => {
     document.documentElement.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#1c1117' : '#fbf3ec');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#12100e' : '#f7f1e8');
     window.dispatchEvent(new Event('themechange'));
   };
   const systemTheme = () => media.matches ? 'dark' : 'light';

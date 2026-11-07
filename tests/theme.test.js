@@ -40,7 +40,7 @@ test('theme follows the system until the visitor chooses, then persists', () => 
   page.toggle();
   assert.equal(page.theme(), 'light');
   assert.equal(page.saved(), 'light');
-  assert.equal(page.color(), '#fbf3ec');
+  assert.equal(page.color(), '#f7f1e8');
   page.system(true);
   assert.equal(page.theme(), 'light');
   assert.equal(setup({ saved: page.saved(), dark: true }).theme(), 'light');
@@ -58,5 +58,5 @@ test('blocked storage does not prevent switching themes', () => {
   assert.equal(page.theme(), 'light');
   page.toggle();
   assert.equal(page.theme(), 'dark');
-  assert.equal(page.color(), '#1c1117');
+  assert.equal(page.color(), '#12100e');
 });

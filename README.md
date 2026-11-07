@@ -39,3 +39,22 @@ The workflow transfers the build between jobs internally; you do not need to dow
 - Preview on mobile and desktop; check keyboard navigation and reduced-motion behavior. External tracking and map embeds are not included by default and need privacy approval before adding them.
 - Inspect `public_html` for stale files, especially `contact.php` and `blog.html`. Hostinger may not delete files removed from Git; remove obsolete files only after confirming a backup.
 - **Rollback:** Restore the previous generated release on `master` and redeploy through Hostinger. Restore or clean `public_html` from the backup if stale files remain.
+
+## SEO
+
+Search setup and post-launch steps (Search Console, Google Business Profile, redirects) are in [`docs/seo.md`](docs/seo.md).
+
+## Photography
+
+`bg*.jpg` photos come from the original site. The other photos in `static/img/` are Unsplash placeholders (Unsplash License, no attribution required). Replace them with real salon photos, for example from [@catwalk21salon](https://www.instagram.com/catwalk21salon/), before launch:
+
+| File | Source |
+|---|---|
+| `hero-bride.jpg` | https://unsplash.com/photos/ohENjR9w0bk |
+| `bridal-portrait.jpg` | https://unsplash.com/photos/VPwSJhu5uhs |
+| `bridal-makeup.jpg` | https://unsplash.com/photos/N9hRh86R4T0 |
+| `kundan-look.jpg` | https://unsplash.com/photos/KxHcyNOIO_M |
+| `mehendi.jpg` | https://unsplash.com/photos/wbLCos9rVLQ |
+| `mehendi-detail.jpg` | https://unsplash.com/photos/W1gGN71UOzI |
+| `salon-interior.jpg` | https://unsplash.com/photos/_Fy7Kq0w6OI |
+| `grooming.jpg` | https://unsplash.com/photos/Z2WfmQC-sVk |

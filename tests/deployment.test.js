@@ -13,6 +13,7 @@ test('manual deployment needs no input and still waits for the checked build', (
     assert.ok(workflow.includes(`- run: ${command}`));
   }
   assert.match(workflow, /git push origin HEAD:master/);
+  assert.match(workflow, /include-hidden-files: true/);
 });
 
 test('only a manual run on main can publish to master', () => {

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://catwalk21salon.com/sitemap.xml
