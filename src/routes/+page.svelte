@@ -5,6 +5,9 @@
   import '@fontsource/cormorant-garamond/latin-300-italic.css';
   import '@fontsource/cormorant-garamond/latin-400-italic.css';
   import '@fontsource-variable/manrope';
+  import '@fontsource-variable/cinzel';
+  import '@fontsource/tiro-devanagari-sanskrit/devanagari-400.css';
+  import '@fontsource/didact-gothic/latin-400.css';
   import { onMount } from 'svelte';
   import { animate, inView, scroll, stagger } from 'motion';
   import ScissorsIcon from 'phosphor-svelte/lib/ScissorsIcon';
@@ -28,11 +31,18 @@
   import XIcon from 'phosphor-svelte/lib/XIcon';
 
   // Photos without a bg* name are Unsplash stock placeholders; see README for sources.
+  // Nine-lobed Mughal (jharokha) arch in a 100×125 box. It both masks each service photo and draws
+  // its gold frame; bells hang from the lobe cusps at x = 14.04 and 85.96.
+  const archPath = 'M0 125V56H3.5V54A14.6 14.6 0 0 1 6.2 37.03A14.6 14.6 0 0 1 14.04 21.75A14.6 14.6 0 0 1 26.25 9.65A14.6 14.6 0 0 1 41.61 1.95A14.27 14.27 0 0 1 58.39 1.95A14.6 14.6 0 0 1 73.75 9.65A14.6 14.6 0 0 1 85.96 21.75A14.6 14.6 0 0 1 93.8 37.03A14.6 14.6 0 0 1 96.5 54V56H100V125Z';
+  const archMask = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -1 100 126' preserveAspectRatio='none'><path d='${archPath}'/></svg>`)}")`;
+  // ०१, ०२ … in Devanagari digits, for any number of services.
+  const devanagariIndex = (/** @type {number} */ index) => (index + 1).toLocaleString('hi-IN-u-nu-deva', { minimumIntegerDigits: 2 });
+
   const services = [
-    { name: 'Hair', icon: ScissorsIcon, description: 'Cuts, colour, smoothing and styling made to suit your texture, mood and routine.', image: '/img/bg3.jpg', width: 1600, height: 1068, alt: 'Stylist shaping a short haircut', details: 'Cuts · Colour · Styling', position: '45% center' },
-    { name: 'Skin care', icon: SparkleIcon, description: 'Thoughtful care that leaves your skin looking fresh, bright and cared for.', image: '/img/bg11.jpg', width: 1600, height: 1066, alt: 'Beauty portrait surrounded by fresh citrus', details: 'Refresh · Care · Glow', position: '60% center' },
-    { name: 'Spa', icon: FlowerLotusIcon, description: 'Slow down with restorative treatments and a little room to breathe.', image: '/img/bg8.jpg', width: 1600, height: 1066, alt: 'Relaxing hot stone spa treatment', details: 'Unwind · Restore · Recharge', position: 'center' },
-    { name: 'Bridal', icon: HeartIcon, description: 'A beautifully considered look for your most memorable celebration.', image: '/img/bridal-portrait.jpg', width: 1000, height: 1500, alt: 'Bride in a red lehenga with a gold maang tikka and choker', details: 'Makeup · Hair · Finishing touches', position: 'center 30%' }
+    { name: 'Hair', sanskrit: 'केशः', transliteration: 'keśaḥ', meaning: 'tresses', icon: ScissorsIcon, description: 'Cuts, colour, smoothing and styling made to suit your texture, mood and routine.', image: '/img/bg3.jpg', width: 1600, height: 1068, alt: 'Stylist shaping a short haircut', details: 'Cuts · Colour · Styling', position: '45% center' },
+    { name: 'Skin care', sanskrit: 'कान्तिः', transliteration: 'kāntiḥ', meaning: 'radiance', icon: SparkleIcon, description: 'Thoughtful care that leaves your skin looking fresh, bright and cared for.', image: '/img/bg11.jpg', width: 1600, height: 1066, alt: 'Beauty portrait surrounded by fresh citrus', details: 'Refresh · Care · Glow', position: '60% center' },
+    { name: 'Spa', sanskrit: 'विश्रान्तिः', transliteration: 'viśrāntiḥ', meaning: 'repose', icon: FlowerLotusIcon, description: 'Slow down with restorative treatments and a little room to breathe.', image: '/img/bg8.jpg', width: 1600, height: 1066, alt: 'Relaxing hot stone spa treatment', details: 'Unwind · Restore · Recharge', position: 'center' },
+    { name: 'Bridal', sanskrit: 'मङ्गलम्', transliteration: 'maṅgalam', meaning: 'auspiciousness', icon: HeartIcon, description: 'A beautifully considered look for your most memorable celebration.', image: '/img/bridal-portrait.jpg', width: 1000, height: 1500, alt: 'Bride in a red lehenga with a gold maang tikka and choker', details: 'Makeup · Hair · Finishing touches', position: 'center 30%' }
   ];
 
   // Listing IDs come from the Google Maps embeds on the original site.
@@ -123,6 +133,14 @@
         const animation = animate([...element.children], { opacity: [0, 1], y: [40, 0] }, { duration: .9, delay: stagger(.1), ease });
         cleanups.push(() => animation.cancel());
       }, { amount: .1 }));
+      // Gold linework (arch frames, diya dividers) traces itself in once it scrolls into view.
+      cleanups.push(inView('[data-draw]', (element) => { element.classList.add('drawn'); }, { amount: .3 }));
+      // Spinning mandalas, swinging bells and diya flames only animate while on screen.
+      cleanups.push(inView('.mandala, .arch-frame, .service-divider', (element) => {
+        element.classList.add('live');
+        return () => element.classList.remove('live');
+      }, { margin: '200px' }));
+      cleanups.push(() => document.querySelectorAll('.drawn, .live').forEach((element) => element.classList.remove('drawn', 'live')));
       // Photos unveil from the bottom edge while settling from a slight zoom. A fully clipped
       // element never intersects, so its parent is observed instead.
       document.querySelectorAll('[data-clip]').forEach((element) => {
@@ -195,18 +213,29 @@
   <span class="wordmark">Catwalk <span>21</span><small>Salon & Spa</small></span>
 {/snippet}
 
-<!-- Decorative mandala: petal rings drawn by rotating one path, so it stays crisp and tiny. -->
+<!-- Decorative mandala: four stacked SVG rings (rangoli border, paisley + lotus, kolam chain, bindu core).
+     Each ring is its own <svg> so counter-rotation stays on the compositor instead of repainting. -->
 {#snippet mandala(/** @type {string} */ variant)}
-  <svg class={`mandala ${variant}`} viewBox="-100 -100 200 200" fill="none" stroke="currentColor" stroke-width=".5" aria-hidden="true" focusable="false">
-    <circle r="97" /><circle r="93" stroke-dasharray="1 3" />
-    {#each Array(32) as _, i}<path transform={`rotate(${i * 11.25})`} d="M-9 -91Q0 -101 9 -91" />{/each}
-    {#each Array(16) as _, i}<g transform={`rotate(${i * 22.5})`}><path d="M0 -88C11 -76 11 -62 0 -52C-11 -62 -11 -76 0 -88Z" /><path d="M0 -80C5 -72 5 -64 0 -58C-5 -64 -5 -72 0 -80Z" /><circle cy="-46" r="1.2" fill="currentColor" /></g>{/each}
-    <circle r="42" /><circle r="38" stroke-dasharray="2 2" />
-    {#each Array(12) as _, i}<path transform={`rotate(${i * 30 + 15})`} d="M0 -38C10 -31 10 -24 0 -18C-10 -24 -10 -31 0 -38Z" />{/each}
-    <circle r="16" />
-    {#each Array(8) as _, i}<path transform={`rotate(${i * 45})`} d="M0 -14C4 -10 4 -6 0 -3C-4 -6 -4 -10 0 -14Z" />{/each}
-    <circle r="2" fill="currentColor" />
-  </svg>
+  <div class={`mandala ${variant}`} aria-hidden="true">
+    <svg class="r1" viewBox="-100 -100 200 200">
+      <circle r="97" /><circle r="93" stroke-dasharray=".1 2.8" stroke-width="1.2" />
+      {#each Array(32) as _, i}<g transform={`rotate(${i * 11.25})`}><path d="M-9 -91Q0 -101 9 -91" /><circle class="dot" cy="-98.6" r=".9" /></g>{/each}
+      {#each Array(24) as _, i}<g transform={`rotate(${i * 15}) translate(0 -82) scale(1.3)`}><path class="haldi" d="M0 5C-5 5-6-1-3-3.5C-1-5 1-6 .5-9C4-7.5 5.5-3 4.5.5C3.8 3.3 2 5 0 5Z" /><circle class="kumkum-solid" cx=".6" cy=".6" r="1.4" /></g>{/each}
+      <circle r="74" />
+    </svg>
+    <svg class="r2" viewBox="-100 -100 200 200">
+      {#each Array(16) as _, i}<g transform={`rotate(${i * 22.5})`}><path class="kumkum" d="M0-72C10-62 11-53 0-45C-11-53-10-62 0-72Z" /><path class="haldi" d="M0-66C5-60 5-54 0-50C-5-54-5-60 0-66Z" /><circle class="dot" cy="-69" r="1.1" transform="rotate(11.25)" /></g>{/each}
+      <circle r="44" /><circle r="41" stroke-dasharray=".1 2.2" stroke-width="1" />
+    </svg>
+    <svg class="r3" viewBox="-100 -100 200 200">
+      {#each Array(12) as _, i}<g transform={`rotate(${i * 30})`}><circle cy="-30" r="10" /><circle class="dot" cy="-30" r=".9" /></g>{/each}
+      <circle r="21" />
+    </svg>
+    <svg class="r4" viewBox="-100 -100 200 200">
+      {#each Array(8) as _, i}<path class="kumkum" transform={`rotate(${i * 45})`} d="M0-19C6-13 6-8 0-4C-6-8-6-13 0-19Z" /><path class="haldi" transform={`rotate(${i * 45 + 22.5})`} d="M0-15C3-12 3-9 0-6C-3-9-3-12 0-15Z" />{/each}
+      <circle class="haldi" r="3.6" /><circle class="kumkum-solid" r="1.6" />
+    </svg>
+  </div>
 {/snippet}
 
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -277,13 +306,24 @@
 
   <section id="services" class="services section" aria-labelledby="services-title">
     <div class="wrap">
-      <div class="section-heading" data-reveal><div><p class="eyebrow"><span class="rule"></span>What we offer</p><h2 id="services-title">A little something<br />for <em>every mood.</em></h2></div><p>Everyday rituals. Special occasions. A considered touch, every time.</p></div>
-      <div class="service-list">
+      <div class="section-heading" data-reveal><div><p class="eyebrow"><span class="rule"></span>What we offer</p><h2 id="services-title">A little something<br />for <em>every mood.</em></h2></div><div class="sutra-block"><p class="sutra"><span lang="sa">सत्यं शिवं सुन्दरम्</span><small>Truth · Goodness · Beauty</small></p><p>Everyday rituals. Special occasions. A considered touch, every time.</p></div></div>
+      <div class="service-list" style={`--arch-mask: ${archMask}`}>
         {#each services as service, index}
+          {#if index}
+            <svg class="service-divider" viewBox="-60 -16 120 28" aria-hidden="true" data-draw>
+              <path class="draw" pathLength="1" d="M-58 6H-18M58 6H18" /><circle class="dot" cx="-14" cy="6" r="1.4" /><circle class="dot" cx="14" cy="6" r="1.4" />
+              <path class="diya" d="M-9 3H9C8 9 4 11 0 11C-4 11-8 9-9 3ZM9 3L12 1" /><path class="flame" d="M0-14C4-8 4-3 0 1C-4-3-4-8 0-14Z" />
+            </svg>
+          {/if}
           <article class="service-card" id={`service-${index}`}>
-            <figure class="service-photo" data-clip><img src={service.image} alt={service.alt} width={service.width} height={service.height} loading="lazy" style={`object-position: ${service.position}`} /></figure>
+            <div class="service-visual">
+              {@render mandala('mandala-service')}
+              <figure class="service-photo" data-clip><img src={service.image} alt={service.alt} width={service.width} height={service.height} loading="lazy" style={`object-position: ${service.position}`} data-parallax="22" /></figure>
+              <svg class="arch-frame" viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true" data-draw><path class="draw" pathLength="1" d={archPath} /><path class="draw" pathLength="1" d="M-2.5 52V127M102.5 52V127M-4.5 52H8M92 52H104.5M-4 127H104M-5.5 130H105.5M-7 133H107" /><g class="kalash"><path d="M50-1V-2.5M47.5-3.2H52.5M48-4C47.2-5.8 48.3-7.4 50-7.4C51.7-7.4 52.8-5.8 52-4ZM48.8-7.8H51.2" /><circle cy="-9.2" cx="50" r=".9" /></g>{#each [14.04, 85.96] as x}<g class="bell"><path d={`M${x} 21.75V28`} /><path d={`M${x - 1.6} 31C${x - 1.6} 28.6 ${x - .9} 28 ${x} 28C${x + .9} 28 ${x + 1.6} 28.6 ${x + 1.6} 31Z`} /><circle cx={x} cy="31.7" r=".5" /></g>{/each}</svg>
+            </div>
             <div class="service-copy" data-reveal>
-              <span class="service-index" aria-hidden="true">0{index + 1}</span>
+              <span class="service-index" aria-hidden="true">{devanagariIndex(index)}</span>
+              <p class="sanskrit"><span lang="sa">{service.sanskrit}</span><small>{service.transliteration} · {service.meaning}</small></p>
               <p class="eyebrow"><service.icon size={18} aria-hidden="true" />{service.details}</p>
               <div class="service-title"><h3>{service.name}</h3><a class="round-link" href="#branches" aria-label={`Enquire about ${service.name}`}><ArrowUpRightIcon size={22} aria-hidden="true" /></a></div>
               <p>{service.description}</p>
@@ -371,7 +411,6 @@
   <div class="jaali" aria-hidden="true"></div>
   {@render mandala('mandala-footer')}
   <div class="wrap">
-    <p class="footer-wordmark" aria-hidden="true">Catwalk <em>21</em></p>
     <div class="footer-inner">
       <div><a href="#top" class="brand" aria-label="Catwalk 21 home">{@render brandMark()}</a><p>Luxury salon & spa · Kandivali East, Mumbai</p></div>
       <div class="footer-links">
@@ -390,7 +429,7 @@
 </nav>
 
 <style>
-  :global(:root) { --bg: #f7f1e8; --surface: #fffbf5; --tint: #efe5d6; --ink: #1a1412; --muted: #6b5e57; --gold: #7d5e27; --gold-soft: #a98448; --em: #7a1f3d; --border: #e3d7c6; --glow: #eadcc3; --shadow: rgb(26 20 18 / .16); --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Manrope Variable', system-ui, sans-serif; --ease: cubic-bezier(.22, 1, .36, 1); --gutter: clamp(1.25rem, 5vw, 5rem); color-scheme: light; }
+  :global(:root) { --bg: #f7f1e8; --surface: #fffbf5; --tint: #efe5d6; --ink: #1a1412; --muted: #6b5e57; --gold: #7d5e27; --gold-soft: #a98448; --em: #7a1f3d; --border: #e3d7c6; --glow: #eadcc3; --shadow: rgb(26 20 18 / .16); --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Manrope Variable', system-ui, sans-serif; --logo: 'Didact Gothic', 'Century Gothic', 'Manrope Variable', sans-serif; --kumkum: #b3243f; --haldi: #e0962a; --clay: #b5562c; --display: 'Cinzel Variable', 'Trajan Pro', Georgia, serif; --deva: 'Tiro Devanagari Sanskrit', 'Kohinoor Devanagari', 'Noto Serif Devanagari', 'Nirmala UI', serif; --ease: cubic-bezier(.22, 1, .36, 1); --gutter: clamp(1.25rem, 5vw, 5rem); color-scheme: light; }
   :global(:root[data-theme='dark']) { --bg: #12100e; --surface: #231d19; --tint: #1b1714; --ink: #f4ede3; --muted: #b5a898; --gold: #d4b37a; --gold-soft: #c8a46a; --em: #e2c089; --border: #3a3029; --glow: #2a1f17; --shadow: rgb(0 0 0 / .5); color-scheme: dark; }
   :global(*) { box-sizing: border-box; }
   :global(html) { scroll-behavior: smooth; }
@@ -405,13 +444,13 @@
   img { display: block; max-width: 100%; }
   figure { margin: 0; }
   p { line-height: 1.8; }
-  h1, h2, h3, .visit-banner p, .footer-wordmark { font-family: var(--serif); font-weight: 300; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+  h1, h2, h3, .visit-banner p { font-family: var(--serif); font-weight: 300; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
   h2 { font-size: clamp(2.6rem, 1.4rem + 4vw, 5.6rem); line-height: 1.02; }
   h3 { font-size: clamp(2rem, 1.4rem + 1.8vw, 3.2rem); line-height: 1.1; font-weight: 400; }
   em { font-style: italic; color: var(--em); }
   .wrap { width: min(100% - var(--gutter) * 2, 1320px); margin-inline: auto; }
   .section { padding-block: clamp(5rem, 10vw, 9rem); }
-  .eyebrow { display: flex; align-items: center; gap: .9rem; margin: 0 0 1.4rem; font-size: .68rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); }
+  .eyebrow { display: flex; align-items: center; gap: .9rem; margin: 0 0 1.4rem; font: 600 .76rem var(--display); letter-spacing: .22em; text-transform: uppercase; text-wrap: balance; color: var(--gold); }
   .rule { display: block; width: 2.5rem; height: 1px; background: currentColor; transform-origin: left; }
   .progress { position: fixed; inset: 0 0 auto; z-index: 40; height: 2px; background: linear-gradient(90deg, #c8a46a, #ecd8a8, #c8a46a); transform: scaleX(0); transform-origin: left; }
   .skip-link { position: fixed; top: .5rem; left: 1rem; z-index: 50; transform: translateY(-200%); padding: 1rem; background: var(--ink); color: var(--bg); }
@@ -425,8 +464,9 @@
   .brand-mark .logo-dark { display: none; }
   :global([data-theme='dark']) .logo-light { display: none; }
   :global([data-theme='dark']) .brand-mark .logo-dark { display: block; }
-  .wordmark { font: 400 1.7rem/1 var(--serif); letter-spacing: -.01em; }
-  .wordmark > span { font-style: italic; color: var(--gold-soft); }
+  /* Didact Gothic: free (OFL) near-match for the Century Gothic-style lettering on the salon sign board. */
+  .wordmark { font: 400 1.75rem/1 var(--logo); letter-spacing: .01em; }
+  .wordmark > span { color: var(--gold-soft); }
   .wordmark small { display: block; margin-top: .35rem; font: 700 .52rem var(--sans); letter-spacing: .32em; text-transform: uppercase; opacity: .8; }
   nav { display: flex; align-items: center; gap: clamp(.6rem, 2vw, 2.2rem); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
   nav a { text-decoration: none; }
@@ -449,10 +489,18 @@
 
   .jaali { position: absolute; inset: 0; pointer-events: none; opacity: .07; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='%23d4b37a' stroke-width='.8'%3E%3Ccircle cx='28' cy='28' r='19.8'/%3E%3Ccircle cx='0' cy='0' r='19.8'/%3E%3Ccircle cx='56' cy='0' r='19.8'/%3E%3Ccircle cx='0' cy='56' r='19.8'/%3E%3Ccircle cx='56' cy='56' r='19.8'/%3E%3C/g%3E%3C/svg%3E"); mask-image: radial-gradient(ellipse at 70% 40%, black, transparent 70%); }
   :global([data-theme='light']) .jaali { opacity: .16; }
-  .mandala { position: absolute; pointer-events: none; color: var(--gold-soft); }
-  .mandala-hero { z-index: -1; inset: 50% auto auto 50%; width: 150%; margin: -75% 0 0 -75%; opacity: .3; }
-  .mandala-reviews { top: 50%; left: 50%; width: min(720px, 120vw); margin: calc(min(720px, 120vw) / -2) 0 0 calc(min(720px, 120vw) / -2); opacity: .12; }
-  .mandala-footer { top: -12rem; right: -12rem; width: 34rem; opacity: .14; }
+  /* Kumkum red and haldi saffron give the gold linework its festive, hand-painted colour. */
+  .mandala { position: absolute; pointer-events: none; aspect-ratio: 1; color: var(--gold-soft); }
+  .mandala svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; stroke: currentColor; stroke-width: .5; stroke-linecap: round; animation: spin var(--spin) linear infinite; }
+  .mandala .r1 { --spin: 240s; } .mandala .r2 { --spin: 150s; animation-direction: reverse; }
+  .mandala .r3 { --spin: 90s; } .mandala .r4 { --spin: 50s; animation-direction: reverse; }
+  .mandala .dot { fill: currentColor; stroke: none; }
+  .mandala .kumkum { fill: var(--kumkum); fill-opacity: .28; }
+  .mandala .kumkum-solid { fill: var(--kumkum); stroke: none; }
+  .mandala .haldi { fill: var(--haldi); fill-opacity: .4; }
+  .mandala-hero { z-index: -1; inset: 50% auto auto 50%; width: 150%; margin: -75% 0 0 -75%; opacity: .42; animation: bloom 2.6s .2s var(--ease) both, breathe 9s 2.8s ease-in-out infinite alternate; }
+  .mandala-reviews { top: 50%; left: 50%; width: min(720px, 120vw); margin: calc(min(720px, 120vw) / -2) 0 0 calc(min(720px, 120vw) / -2); opacity: .16; }
+  .mandala-footer { bottom: -60%; right: -6rem; height: 150%; max-height: 26rem; opacity: .2; } /* sized from footer height so its top never clips */
   /* Mehendi-style scalloped lace hanging from the top edge of tinted sections. */
   .services, .gallery, .visit-banner { position: relative; }
   .services::before, .gallery::before, .visit-banner::before { content: ''; position: absolute; inset: 0 0 auto; height: 20px; pointer-events: none; opacity: .55; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Cg fill='none' stroke='%23c8a46a' stroke-width='.8'%3E%3Cpath d='M0 1Q20 22 40 1'/%3E%3Cpath d='M8 1Q20 13 32 1'/%3E%3C/g%3E%3Cg fill='%23c8a46a'%3E%3Ccircle cx='20' cy='16' r='1.4'/%3E%3Ccircle cx='0' cy='4' r='1'/%3E%3Ccircle cx='40' cy='4' r='1'/%3E%3C/g%3E%3C/svg%3E") repeat-x top / 40px 20px; }
@@ -501,19 +549,47 @@
   .care-line { height: 1px; margin-top: 3.5rem; background: linear-gradient(90deg, var(--gold-soft), transparent); transform-origin: left; }
   .welcome-note { max-width: 30rem; margin: 2rem 0 0 auto; color: var(--muted); }
 
-  .services { background: var(--tint); }
+  .services { background: var(--tint); overflow-x: clip; }
+  /* Toran over the temple door: mango leaves and marigolds strung across the top of the section. */
+  .services::before { height: 30px; opacity: .9; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='30'%3E%3Cpath d='M0 3Q24 9 48 3' fill='none' stroke='%23c8a46a' stroke-width='.8'/%3E%3Cpath d='M24 6C29 12 28 22 24 29C20 22 19 12 24 6Z' fill='%237d8a3c' fill-opacity='.55'/%3E%3Cpath d='M24 8V27' stroke='%23c8a46a' stroke-width='.5'/%3E%3Ccircle cx='0' cy='7' r='3.6' fill='%23e0962a'/%3E%3Ccircle cx='48' cy='7' r='3.6' fill='%23e0962a'/%3E%3Ccircle cx='0' cy='7' r='1.4' fill='%23b3243f'/%3E%3Ccircle cx='48' cy='7' r='1.4' fill='%23b3243f'/%3E%3C/svg%3E") repeat-x top / 48px 30px; }
   .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: clamp(3rem, 6vw, 5rem); }
   .section-heading > p { max-width: 21rem; color: var(--muted); margin: 0; }
-  .service-list { display: grid; gap: clamp(4rem, 9vw, 8rem); }
+  .service-list { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); }
   .service-card { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: clamp(2rem, 6vw, 7rem); }
-  .service-card:nth-child(even) .service-photo { order: 2; }
-  .service-photo { position: relative; overflow: hidden; border-radius: 4px; aspect-ratio: 4 / 5; background: var(--surface); }
-  .service-card:nth-child(odd) .service-photo { border-radius: 999px 999px 4px 4px; }
-  .service-photo img { width: 100%; height: 100%; object-fit: cover; transition: scale 1.2s var(--ease); }
+  .service-card:nth-of-type(even) .service-visual { order: 2; }
+  /* Each photo sits in a Mughal jharokha: a nine-lobed cusped arch with a gold frame and a mandala halo. */
+  .service-visual { position: relative; isolation: isolate; padding: 14px; }
+  .mandala-service { z-index: -1; top: -9%; left: 50%; width: 84%; margin-left: -42%; opacity: .26; transition: opacity .8s var(--ease); }
+  .service-photo { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--surface); mask: var(--arch-mask) center / 100% 100% no-repeat; }
+  .service-photo img { width: 100%; height: 116%; margin-top: -8%; object-fit: cover; transition: scale 1.2s var(--ease); }
+  .arch-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; stroke: var(--gold-soft); stroke-width: .35; pointer-events: none; transition: stroke .6s; }
+  .draw { stroke-dasharray: 1; }
+  :global(.motion-ok) [data-draw] .draw { stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s .3s var(--ease); }
+  :global(.motion-ok .drawn) .draw { stroke-dashoffset: 0; }
+  .arch-frame .kalash { fill: color-mix(in srgb, var(--haldi) 45%, transparent); }
+  .arch-frame .kalash circle, .arch-frame .bell path + path, .arch-frame .bell circle { fill: var(--gold-soft); }
+  /* Temple bells hang from the arch cusps and sway slowly, each on its own beat. */
+  .arch-frame .bell { transform-box: fill-box; transform-origin: 50% 0; animation: swing 3.4s ease-in-out infinite alternate; }
+  .arch-frame .bell + .bell { animation-delay: -1.7s; }
+  .service-divider { justify-self: center; width: min(320px, 70%); fill: none; stroke: var(--gold-soft); stroke-width: .8; stroke-linecap: round; overflow: visible; }
+  .service-divider .dot { fill: var(--gold-soft); stroke: none; }
+  .service-divider .diya { fill: color-mix(in srgb, var(--clay) 40%, transparent); }
+  .service-divider .flame { fill: var(--haldi); stroke: none; transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 1.6s ease-in-out infinite alternate; filter: drop-shadow(0 0 4px var(--haldi)); }
+  /* Must follow the animation shorthands above, which would otherwise reset play-state to running. */
+  .mandala svg, .arch-frame .bell, .service-divider .flame { animation-play-state: paused; }
+  .mandala:global(.live) svg, .arch-frame:global(.live) .bell, .service-divider:global(.live) .flame { animation-play-state: running; }
+  /* Sanskrit is set in Tiro Devanagari Sanskrit, a manuscript-style face drawn for classical texts. */
+  [lang='sa'] { font-family: var(--deva); font-weight: 400; }
+  .sanskrit { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem .9rem; margin: 0 0 1rem; color: var(--em); font-size: clamp(1.5rem, 1.2rem + .8vw, 2rem); line-height: 1.4; }
+  .sanskrit small, .sutra small { font: italic 400 1.05rem var(--serif); color: var(--muted); letter-spacing: .02em; }
+  .sutra-block { max-width: 21rem; }
+  .sutra-block > p:last-child { color: var(--muted); margin: 0; }
+  .sutra { display: flex; flex-direction: column; gap: .2rem; margin: 0 0 1.2rem; padding-left: 1rem; border-left: 2px solid var(--gold-soft); color: var(--gold); font-size: 1.35rem; }
   .service-copy { position: relative; max-width: 30rem; }
-  .service-index { display: block; margin-bottom: 1.5rem; font: italic 300 clamp(4.5rem, 3rem + 4vw, 8rem)/.8 var(--serif); color: transparent; -webkit-text-stroke: 1px var(--gold-soft); }
+  .service-index { display: block; margin-bottom: 1.5rem; font: 400 clamp(4.5rem, 3rem + 4vw, 8rem)/.9 var(--deva); color: transparent; -webkit-text-stroke: 1px var(--gold-soft); }
   .service-copy .eyebrow { gap: .6rem; letter-spacing: .18em; }
-  .service-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .service-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; position: relative; padding-bottom: 1.2rem; background: linear-gradient(90deg, var(--gold-soft), transparent 85%) bottom / 100% 1px no-repeat; }
+  .service-title::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 7px; height: 7px; rotate: 45deg; background: var(--gold-soft); }
   .round-link { display: grid; place-items: center; width: 54px; height: 54px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 50%; text-decoration: none; transition: background .4s, color .4s, border-color .4s; }
   .round-link:hover, .round-link:focus-visible { background: #c8a46a; border-color: #c8a46a; color: #12100e; }
   .service-copy > p:last-child { color: var(--muted); margin: 1.2rem 0 0; }
@@ -572,9 +648,7 @@
   .branch-card .address { color: var(--muted); font-size: .92rem; max-width: 26rem; margin: 1.2rem auto 0; min-height: 5.5rem; }
   .branch-card .actions { justify-content: center; margin-top: 2rem; }
 
-  .site-footer { position: relative; overflow: hidden; padding-block: clamp(4rem, 8vw, 6rem) 2rem; background: var(--tint); border-top: 1px solid var(--border); }
-  .footer-wordmark { font-size: clamp(4.5rem, 17vw, 17rem); line-height: .85; letter-spacing: -.04em; white-space: nowrap; margin-bottom: clamp(2.5rem, 5vw, 4rem); background: linear-gradient(180deg, var(--ink), color-mix(in srgb, var(--ink) 15%, transparent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .footer-wordmark em { color: transparent; -webkit-text-stroke: 1px var(--gold-soft); }
+  .site-footer { position: relative; overflow: hidden; padding-block: clamp(2rem, 4vw, 3rem) 2rem; background: linear-gradient(var(--bg), var(--tint) 45%); }
   .footer-inner { position: relative; display: flex; justify-content: space-between; align-items: end; gap: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
   .footer-inner p { font-size: .8rem; color: var(--muted); }
   .footer-links { display: flex; flex-wrap: wrap; gap: .5rem 1.8rem; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -594,6 +668,11 @@
   @keyframes cue { 0% { transform: scaleY(0); opacity: 1; } 60% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
   @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes sheen { to { transform: translateX(120%); } }
+  @keyframes spin { to { rotate: 360deg; } }
+  @keyframes swing { from { rotate: -7deg; } to { rotate: 7deg; } }
+  @keyframes flicker { 0% { scale: 1 1; opacity: .85; } 50% { scale: .9 1.08; } 100% { scale: 1.05 .94; opacity: 1; } }
+  @keyframes bloom { from { opacity: 0; transform: scale(.5) rotate(-120deg); } }
+  @keyframes breathe { to { scale: 1.05; } }
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     .button:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgb(200 164 106 / .3); }
@@ -602,6 +681,8 @@
     .link:hover :global(svg), .footer-links a:hover :global(svg) { transform: translateY(-3px); }
     .review-links a:hover :global(svg), .round-link:hover :global(svg) { transform: translate(2px, -2px); }
     .service-card:hover .service-photo img { scale: 1.05; }
+    .service-card:hover .arch-frame { stroke: var(--em); }
+    .service-card:hover .mandala-service { opacity: .55; }
     .tile:hover img { scale: 1.07; }
     .tile:hover figcaption { opacity: 1; transform: none; }
     .branch-card:hover { border-color: var(--gold-soft); transform: translateY(-6px); box-shadow: 0 30px 60px var(--shadow); }
@@ -627,9 +708,9 @@
     .section-heading { flex-direction: column; align-items: start; gap: 1.5rem; }
     .section-heading > p { max-width: 32rem; }
     .service-card { grid-template-columns: 1fr; }
-    .service-card:nth-child(even) .service-photo { order: 0; }
+    .service-card:nth-of-type(even) .service-visual { order: 0; }
     .service-photo { aspect-ratio: 4 / 4.4; }
-    .service-index { font-size: 4.5rem; margin: -3.2rem 0 1rem 1rem; position: relative; }
+    .service-index { font-size: 4rem; margin: 1.6rem 0 .6rem; }
     .branch-grid { grid-template-columns: 1fr; }
     .branch-card { border-radius: 160px 160px 4px 4px; }
     .branch-card .address { min-height: 0; }
@@ -637,7 +718,7 @@
     .tile figcaption { opacity: 1; transform: none; font-size: 1.1rem; padding: 2rem .9rem .8rem; }
     .footer-inner { flex-direction: column; align-items: start; }
     .site-header { padding-block: .8rem; }
-    .wordmark { font-size: 1.4rem; }
+    .wordmark { font-size: 1.45rem; }
     .brand-mark { width: 26px; height: 36px; }
     nav { gap: .5rem; }
     .marquee-group { gap: 1.6rem; padding-right: 1.6rem; }

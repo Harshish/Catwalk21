@@ -44,6 +44,20 @@ The workflow transfers the build between jobs internally; you do not need to dow
 
 Search setup and post-launch steps (Search Console, Google Business Profile, redirects) are in [`docs/seo.md`](docs/seo.md).
 
+## Fonts
+
+All fonts are self-hosted; nothing loads from Google Fonts at runtime.
+
+| Use | Font | Source | Licence |
+|---|---|---|---|
+| Logo wordmark | Didact Gothic | `@fontsource/didact-gothic` | SIL OFL |
+| Headlines | Cormorant Garamond | `@fontsource/cormorant-garamond` | SIL OFL |
+| Body, buttons | Manrope | `@fontsource-variable/manrope` | SIL OFL |
+| Small gold labels | Cinzel | `@fontsource-variable/cinzel` | SIL OFL |
+| Sanskrit and Devanagari numerals | Tiro Devanagari Sanskrit | `@fontsource/tiro-devanagari-sanskrit` | SIL OFL |
+
+The salon sign board uses Champagne & Limousines Bold (`fonts/`), which is free for personal use only, so the site uses Didact Gothic, a free near-match with the same Century Gothic-style letterforms. To use the sign-board font instead, get commercial permission from its designer (nymphont@yahoo.com) first.
+
 ## Photography
 
 `bg*.jpg` photos come from the original site. The other photos in `static/img/` are Unsplash placeholders (Unsplash License, no attribution required). Replace them with real salon photos, for example from [@catwalk21salon](https://www.instagram.com/catwalk21salon/), before launch:

@@ -47,14 +47,38 @@ test('original copy and a pausable decorative service marquee are published', ()
 });
 
 test('mandala ornaments are rendered locally and excluded from assistive navigation', () => {
-  const ornaments = [...html.matchAll(/<svg class="mandala [^"]*"[^>]*>[\s\S]*?<\/svg>/g)].map(([markup]) => markup);
-  assert.equal(ornaments.length, 3);
+  const ornaments = [...html.matchAll(/<div class="mandala [^"]*"[^>]*>[\s\S]*?<\/svg>\s*<\/div>/g)].map(([markup]) => markup);
+  assert.equal(ornaments.length, 7);
   for (const ornament of ornaments) {
-    assert.match(ornament, /aria-hidden="true"/);
-    assert.match(ornament, /focusable="false"/);
+    assert.match(ornament, /^<div[^>]*aria-hidden="true"/);
+    assert.equal(ornament.match(/<svg\b/g)?.length, 4);
     assert.match(ornament, /<path/);
     assert.doesNotMatch(ornament, /<a\b|tabindex/);
   }
+});
+
+test('each service carries a Sanskrit word marked as Sanskrit and a Devanagari index', () => {
+  const cards = [...html.matchAll(/<article class="service-card[^"]*"[^>]*>([\s\S]*?)<\/article>/g)].map((match) => match[1]);
+  for (const [index, word] of ['केशः', 'कान्तिः', 'विश्रान्तिः', 'मङ्गलम्'].entries()) {
+    assert.match(cards[index], new RegExp(`<span lang="sa"[^>]*>${word}</span>`));
+    assert.match(cards[index], new RegExp(`aria-hidden="true"[^>]*>०${'१२३४'[index]}</span>`));
+  }
+});
+
+test('temple ornaments are decorative and the photo arch has one shared shape', () => {
+  const ornaments = [...html.matchAll(/<svg class="(arch-frame|service-divider)[^"]*"[^>]*>/g)].map(([markup]) => markup);
+  assert.equal(ornaments.length, 7);
+  for (const ornament of ornaments) assert.match(ornament, /aria-hidden="true"/);
+  const frame = html.match(/<svg class="arch-frame[\s\S]*?<path[^>]*d="([^"]+)"/)[1];
+  assert.ok(decodeURIComponent(html.match(/--arch-mask: url\(&quot;data:image\/svg\+xml,([^&]+)&quot;\)/)[1]).includes(frame));
+});
+
+test('logo wordmark uses a self-hosted, openly licensed font', () => {
+  const assets = new URL('../build/_app/immutable/assets/', import.meta.url);
+  const css = readdirSync(assets).filter((file) => file.endsWith('.css')).map((file) => readFileSync(new URL(file, assets), 'utf8')).join('');
+  assert.match(css, /font-family:\s*["']?Didact Gothic/);
+  assert.ok(readdirSync(assets).some((file) => /didact-gothic-latin-400.*\.woff2$/.test(file)));
+  assert.doesNotMatch(html + css, /champagne|fonts\.googleapis/i);
 });
 
 test('contact actions use local SVG icons with visible text labels', () => {
