@@ -4,7 +4,7 @@ Prerendered SvelteKit marketing site for Hostinger Single Web Hosting. The exist
 
 ## Local preview
 
-Requires Node.js 22.12 or later and pnpm 11.26.0.
+Requires Node.js 26 (latest LTS; pinned in `.nvmrc`, so `nvm use` or `fnm use` picks it up) and pnpm 11.26.0.
 
 ```sh
 pnpm install --frozen-lockfile
